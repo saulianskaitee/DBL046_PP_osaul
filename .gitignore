@@ -1,1 +1,5 @@
-data_ona 
+data_ona
+tmp/data
+tmp/PPI_PLM
+tmp/labproj_draft.yml
+ona_drafts/training_utils/
