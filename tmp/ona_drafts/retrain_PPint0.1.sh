@@ -1,7 +1,7 @@
 #!/bin/sh
 ### General options
 ### –- specify queue --
-#BSUB -q cabgpu
+#BSUB -q hpc
 ### -- set the job Name --
 #BSUB -J esmif_embed
 ### -- ask for number of cores (default: 1) --
@@ -38,7 +38,7 @@ module load cuda/11.6
 
 # If using conda:
 source ~/.bashrc       # required for conda on DTU HPC
-conda activate esm3
+conda activate esm_cuda
 
 # If using a Python venv:
 # source /work3/s232958/envs/esm_inverse/bin/activate
@@ -51,4 +51,4 @@ nvidia-smi
 # Run your script
 # ---------------------------------------------------------
 
-python /zhome/c9/0/203261/DBL046_PP_osaul/DBL046_PP_osaul/tmp/ona_drafts/cal_esmIF.py
+python /zhome/c9/0/203261/DBL046_PP_osaul/DBL046_PP_osaul/tmp/ona_drafts/retrain_PPint0.1.py

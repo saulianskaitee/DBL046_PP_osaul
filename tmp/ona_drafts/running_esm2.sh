@@ -9,7 +9,7 @@
 ### -- Select the resources: 1 gpu in exclusive process mode --
 #BSUB -gpu "num=1:mode=exclusive_process"
 ### -- set walltime limit: hh:mm --  maximum 24 hours for GPU-queues right now
-#BSUB -W 02:00
+#BSUB -W 01:00
 # request 5GB of system-memory
 #BSUB -R "rusage[mem=15GB]"
 ### -- set the email address --
@@ -38,7 +38,7 @@ module load cuda/11.6
 
 # If using conda:
 source ~/.bashrc       # required for conda on DTU HPC
-conda activate esm3
+conda activate esm_cuda
 
 # If using a Python venv:
 # source /work3/s232958/envs/esm_inverse/bin/activate
@@ -51,4 +51,4 @@ nvidia-smi
 # Run your script
 # ---------------------------------------------------------
 
-python /zhome/c9/0/203261/DBL046_PP_osaul/DBL046_PP_osaul/tmp/ona_drafts/cal_esmIF.py
+python /zhome/c9/0/203261/DBL046_PP_osaul/DBL046_PP_osaul/tmp/ona_drafts/cal_esm2.py
