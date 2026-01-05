@@ -33,7 +33,9 @@ def compute_esmc_embeddings(client, sequence):
         protein_tensor,
         LogitsConfig(sequence=True, return_embeddings=True)
     )
-    return to_numpy(logits_out.embeddings)
+    reps = logits_out.embeddings[1:-1,:]
+    assert (len(sequence) == reps.shape[0])
+    return to_numpy(reps)
 
 # ---------------------------------------------------------
 # Main

@@ -20,15 +20,12 @@ def to_numpy(x):
         return x.detach().cpu().numpy()
     return np.asarray(x)
 
-def compute_esm2_embeddings(model, batch_tokens):
+def compute_esm2_embeddings(model, batch_tokens, seq):
     """Compute per-residue embeddings using ESM2."""
     with torch.no_grad():
         L = model.num_layers
-        reps = model(
-            batch_tokens.to("cuda"),
-            repr_layers=[L],
-            return_contacts=False
-        )["representations"][L][0]
+        reps = model(batch_tokens.to("cuda"), repr_layers=[L], return_contacts=False )["representations"][L][0]
+        # assert (len(seq) == reps.shape[0])
     return to_numpy(reps)
 
 # ---------------------------------------------------------
@@ -158,7 +155,7 @@ def main():
             data = [(name, seq)]
             _, _, batch_tokens = batch_converter(data)
             try:
-                emb = compute_esm2_embeddings(model, batch_tokens)
+                emb = compute_esm2_embeddings(model, batch_tokens, seq)
                 np.save(os.path.join(out_dir_B, f"{name}.npy"), emb)
             except Exception as e:
                 print(f"[ERROR] Failed binder {name}: {e}", file=sys.stderr)
@@ -168,7 +165,7 @@ def main():
             data = [(name, seq)]
             _, _, batch_tokens = batch_converter(data)
             try:
-                emb = compute_esm2_embeddings(model, batch_tokens)
+                emb = compute_esm2_embeddings(model, batch_tokens, seq)
                 np.save(os.path.join(out_dir_T, f"{name}.npy"), emb)
             except Exception as e:
                 print(f"[ERROR] Failed target {name}: {e}", file=sys.stderr)
@@ -179,7 +176,7 @@ def main():
             data = [(name, seq)]
             _, _, batch_tokens = batch_converter(data)
             try:
-                emb = compute_esm2_embeddings(model, batch_tokens)
+                emb = compute_esm2_embeddings(model, batch_tokens, seq)
                 np.save(os.path.join(out_dir, f"{name}.npy"), emb)
             except Exception as e:
                 print(f"[ERROR] Failed embedding {name}: {e}", file=sys.stderr)
